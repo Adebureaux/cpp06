@@ -28,8 +28,10 @@ FILENAME1_DEFINE=$(echo $2 | tr [:lower:] [:upper:])
 
 echo "#ifndef ${FILENAME1_DEFINE}_HPP
 # define ${FILENAME1_DEFINE}_HPP
+
 #include <iostream>
 #include <string>
+
 class $FILENAME1_COPY
 {
 	public:
@@ -37,8 +39,10 @@ class $FILENAME1_COPY
 	$FILENAME1_COPY(const $FILENAME1_COPY &other);
 	$FILENAME1_COPY &operator=(const $FILENAME1_COPY &other);
 	~$FILENAME1_COPY();
+
 	private:
 };
+
 #endif" > $FILENAME1
 
 if [ -n "$FILENAME2" ]; then
@@ -49,8 +53,10 @@ if [ -n "$FILENAME2" ]; then
 
 	echo "#ifndef ${FILENAME2_DEFINE}_HPP
 # define ${FILENAME2_DEFINE}_HPP
+
 #include <iostream>
 #include <string>
+
 class $FILENAME2_COPY
 {
 	public:
@@ -58,8 +64,10 @@ class $FILENAME2_COPY
 	$FILENAME2_COPY(const $FILENAME2_COPY &other);
 	$FILENAME2_COPY &operator=(const $FILENAME2_COPY &other);
 	~$FILENAME2_COPY();
+
 	private:
 };
+
 #endif" > $FILENAME2
 fi
 
@@ -71,8 +79,10 @@ if [ -n "$FILENAME3" ]; then
 
 	echo "#ifndef ${FILENAME3_DEFINE}_HPP
 # define ${FILENAME3_DEFINE}_HPP
+
 #include <iostream>
 #include <string>
+
 class $FILENAME3_COPY
 {
 	public:
@@ -80,8 +90,10 @@ class $FILENAME3_COPY
 	$FILENAME3_COPY(const $FILENAME3_COPY &other);
 	$FILENAME3_COPY &operator=(const $FILENAME3_COPY &other);
 	~$FILENAME3_COPY();
+
 	private:
 };
+
 #endif" > $FILENAME3
 fi
 
@@ -93,8 +105,10 @@ if [ -n "$FILENAME4" ]; then
 
 	echo "#ifndef ${FILENAME4_DEFINE}_HPP
 # define ${FILENAME4_DEFINE}_HPP
+
 #include <iostream>
 #include <string>
+
 class $FILENAME4_COPY
 {
 	public:
@@ -102,8 +116,10 @@ class $FILENAME4_COPY
 	$FILENAME4_COPY(const $FILENAME4_COPY &other);
 	$FILENAME4_COPY &operator=(const $FILENAME4_COPY &other);
 	~$FILENAME4_COPY();
+
 	private:
 };
+
 #endif" > $FILENAME4
 fi
 
@@ -115,8 +131,10 @@ if [ -n "$FILENAME5" ]; then
 
 	echo "#ifndef ${FILENAME5_DEFINE}_HPP
 # define ${FILENAME5_DEFINE}_HPP
+
 #include <iostream>
 #include <string>
+
 class $FILENAME5_COPY
 {
 	public:
@@ -124,8 +142,10 @@ class $FILENAME5_COPY
 	$FILENAME5_COPY(const $FILENAME5_COPY &other);
 	$FILENAME5_COPY &operator=(const $FILENAME5_COPY &other);
 	~$FILENAME5_COPY();
+
 	private:
 };
+
 #endif" > $FILENAME5
 fi
 
@@ -143,8 +163,10 @@ cd srcs
 touch main.cpp
 
 echo "#include \"../includes/METTEZ LE NOM BON DU .HPP A INCLUDE ICI\"
+
 int main(int ac, char **av)
 {
+
 	return (0);	
 }" > main.cpp
 
@@ -153,19 +175,26 @@ FILENAME1_COPY+=".cpp"
 touch $FILENAME1_COPY
 
 echo "#include \"../includes/${FILENAME1}\"
+
 ${CLASS1}::${CLASS1}()
 {
+
 }
+
 ${CLASS1}::${CLASS1}(const ${CLASS1} &other)
 {
 	*this = other;
 }
+
 ${CLASS1} &${CLASS1}::operator=(const ${CLASS1} &other)
 {
+
 	return (*this);
 }
+
 ${CLASS1}::~${CLASS1}()
 {
+
 }
 " > $FILENAME1_COPY
 
@@ -175,19 +204,26 @@ if [ -n "$FILENAME2" ]; then
 	touch $FILENAME2_COPY
 
 	echo "#include \"../includes/${FILENAME2}\"
+
 ${CLASS2}::${CLASS2}()
 {
+
 }
+
 ${CLASS2}::${CLASS2}(const ${CLASS2} &other)
 {
 	*this = other;
 }
+
 ${CLASS2} &${CLASS2}::operator=(const ${CLASS2} &other)
 {
+
 	return (*this);
 }
+
 ${CLASS2}::~${CLASS2}()
 {
+
 }
 " > $FILENAME2_COPY
 fi
@@ -198,19 +234,26 @@ if [ -n "$FILENAME3" ]; then
 	touch $FILENAME3_COPY
 
 	echo "#include \"../includes/${FILENAME3}\"
+
 ${CLASS3}::${CLASS3}()
 {
+
 }
+
 ${CLASS3}::${CLASS3}(const ${CLASS3} &other)
 {
 	*this = other;
 }
+
 ${CLASS3} &${CLASS3}::operator=(const ${CLASS3} &other)
 {
+
 	return (*this);
 }
+
 ${CLASS3}::~${CLASS3}()
 {
+
 }
 " > $FILENAME3_COPY
 fi
@@ -221,19 +264,26 @@ if [ -n "$FILENAME4" ]; then
 	touch $FILENAME4_COPY
 
 	echo "#include \"../includes/${FILENAME4}\"
+
 ${CLASS4}::${CLASS4}()
 {
+
 }
+
 ${CLASS4}::${CLASS4}(const ${CLASS4} &other)
 {
 	*this = other;
 }
+
 ${CLASS4} &${CLASS4}::operator=(const ${CLASS4} &other)
 {
+
 	return (*this);
 }
+
 ${CLASS4}::~${CLASS4}()
 {
+
 }
 " > $FILENAME4_COPY
 fi
@@ -244,19 +294,26 @@ if [ -n "$FILENAME5" ]; then
 	touch $FILENAME5_COPY
 
 	echo "#include \"../includes/${FILENAME5}\"
+
 ${CLASS5}::${CLASS5}()
 {
+
 }
+
 ${CLASS5}::${CLASS5}(const ${CLASS5} &other)
 {
 	*this = other;
 }
+
 ${CLASS5} &${CLASS5}::operator=(const ${CLASS5} &other)
 {
+
 	return (*this);
 }
+
 ${CLASS5}::~${CLASS5}()
 {
+
 }
 " > $FILENAME5_COPY
 fi
@@ -266,6 +323,7 @@ cd ..
 touch Makefile
 
 echo -n "NAME        = program
+
 SRCS        = srcs/main.cpp srcs/${FILENAME1_COPY}" > Makefile
 
 if [ -n "$FILENAME2" ]; then
@@ -285,15 +343,20 @@ if [ -n "$FILENAME5" ]; then
 fi
 
 echo "
+
 OBJS        = \${SRCS:.cpp=.o}
+
 RM          = rm -f
+
 CFLAGS      = -Wall -Wextra -Werror -std=c++98
+
 COMPILER    = c++
+
 \${NAME}: \${OBJS}
 	\${COMPILER} \${CFLAGS} \${OBJS} -o \${NAME}
 
 %.o: %.cpp
-	\$(COMPILER) \$(CFLAGS) -c $< -o \$@
+	\$(COMPILER) \$(CFLAGS) -c \$< -o \$@
 
 all: \${NAME}
 
