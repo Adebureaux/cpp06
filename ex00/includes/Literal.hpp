@@ -2,6 +2,7 @@
 # define LITERAL_HPP
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
 class Literal
 {
@@ -11,6 +12,8 @@ class Literal
 	Literal(const Literal &other);
 	Literal &operator=(const Literal &other);
 	~Literal();
+
+	void findType(std::string av);
 
 	private:
 	std::string	argv;
