@@ -16,6 +16,7 @@ class Convert
 	Convert &operator=(const Convert &other);
 	~Convert();
 
+	double stof(const char *s);
 	void conversion(std::string literal);
 	void printChar(void);
 	void printInt(void);

@@ -2,9 +2,50 @@
 
 Convert::Convert() {}
 
+double Convert::stof(const char *s)
+{
+  double a = 0.0;
+  int e = 0;
+  int c;
+  while ((c = *s++) != '\0' && isdigit(c)) {
+    a = a*10.0 + (c - '0');
+  }
+  if (c == '.') {
+    while ((c = *s++) != '\0' && isdigit(c)) {
+      a = a*10.0 + (c - '0');
+      e = e-1;
+    }
+  }
+  if (c == 'e' || c == 'E') {
+    int sign = 1;
+    int i = 0;
+    c = *s++;
+    if (c == '+')
+      c = *s++;
+    else if (c == '-') {
+      c = *s++;
+      sign = -1;
+    }
+    while (isdigit(c)) {
+      i = i*10 + (c - '0');
+      c = *s++;
+    }
+    e += i*sign;
+  }
+  while (e > 0) {
+    a *= 10.0;
+    e--;
+  }
+  while (e < 0) {
+    a *= 0.1;
+    e++;
+  }
+  return a;
+}
+
 Convert::Convert(std::string literal)
 {
-	char	*endptr;
+	//char	*endptr;
 
 	if (!std::isdigit(literal[0]) && !literal[1])
 		_val = static_cast<int>(literal[0]);
@@ -13,11 +54,13 @@ Convert::Convert(std::string literal)
 		// Should use an other way to convert ...
 		// Use an atof and add endptr !
 		//_val = std::strtod(literal.c_str(), &endptr);
-		if (endptr[0] && (endptr[0] != 'f' || endptr[1]))
-		{
-			std::cout << "cannot convert : wrong argument" << std::endl;
-			std::exit(1);
-		}
+		_val = stof(literal.c_str());
+		_val = nan(NULL);
+		// if (endptr[0] && (endptr[0] != 'f' || endptr[1]))
+		// {
+		// 	std::cout << "cannot convert : wrong argument" << std::endl;
+		// 	std::exit(1);
+		// }
 	}
 	printChar();
 	printInt();
