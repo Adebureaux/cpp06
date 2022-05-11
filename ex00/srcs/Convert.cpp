@@ -13,12 +13,14 @@ Convert::Convert(std::string literal)
 		_val = std::strtod(literal.c_str(), &endptr);
 		if (endptr[0] && (endptr[0] != 'f' || endptr[1]))
 		{
-			std::cout << "wrong argument" << std::endl;
+			std::cout << "cannot convert : wrong argument" << std::endl;
 			std::exit(1);
 		}
 	}
 	printChar();
 	printInt();
+	printFloat();
+	printDouble();
 }
 
 Convert::Convert(const Convert &other)
@@ -37,7 +39,9 @@ Convert::~Convert() {}
 void Convert::printChar(void)
 {
 	std::cout << "char: ";
-	if (_val >= 32 && _val <= 127)
+	if (isnan(this->_val))
+		std::cout << "Impossible" << std::endl;
+	else if (_val >= 32 && _val <= 127)
 		std::cout << static_cast<char>(_val) << std::endl;
 	else
 		std::cout << "Non displayable" << std::endl;
@@ -45,13 +49,27 @@ void Convert::printChar(void)
 
 void Convert::printInt(void)
 {
-	std::cout << "Int: ";
-	if (this->_val < static_cast<double>(INT_MIN))
-		std::cout << "underflow" << std::endl;
+	std::cout << "int: ";
+	if (isnan(this->_val))
+		std::cout << "Impossible" << std::endl;
+	else if (this->_val < static_cast<double>(INT_MIN))
+		std::cout << "Underflow" << std::endl;
 	else if (this->_val > static_cast<double>(INT_MAX))
-		std::cout << "overflow" << std::endl;
+		std::cout << "Overflow" << std::endl;
 	else
 		std::cout << static_cast<int>(_val) << std::endl;
+}
+
+void Convert::printFloat(void)
+{
+	std::cout << "float: ";
+	std::cout << std::fixed << std::setprecision(1) << static_cast<float>(_val) << 'f' << std::endl;
+}
+
+void Convert::printDouble(void)
+{
+	std::cout << "double: ";
+	std::cout << std::fixed << std::setprecision(1) << static_cast<double>(_val) << std::endl;
 }
 
 // char	*endptr;

@@ -4,6 +4,8 @@
 #include <string>
 #include <cstdlib>
 #include <climits>
+#include <cmath>
+#include <iomanip>
 
 class Convert
 {
@@ -17,6 +19,8 @@ class Convert
 	void conversion(std::string literal);
 	void printChar(void);
 	void printInt(void);
+	void printFloat(void);
+	void printDouble(void);
 
 	private:
 	double _val;
