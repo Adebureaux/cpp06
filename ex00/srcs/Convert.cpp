@@ -10,7 +10,9 @@ Convert::Convert(std::string literal)
 		_val = static_cast<int>(literal[0]);
 	else
 	{
-		_val = std::strtod(literal.c_str(), &endptr);
+		// Should use an other way to convert ...
+		// Use an atof and add endptr !
+		//_val = std::strtod(literal.c_str(), &endptr);
 		if (endptr[0] && (endptr[0] != 'f' || endptr[1]))
 		{
 			std::cout << "cannot convert : wrong argument" << std::endl;
@@ -38,7 +40,7 @@ Convert::~Convert() {}
 
 void Convert::printChar(void)
 {
-	std::cout << "char: ";
+	std::cout << "char   : ";
 	if (isnan(this->_val))
 		std::cout << "Impossible" << std::endl;
 	else if (_val >= 32 && _val <= 127)
@@ -49,7 +51,7 @@ void Convert::printChar(void)
 
 void Convert::printInt(void)
 {
-	std::cout << "int: ";
+	std::cout << "int    : ";
 	if (isnan(this->_val))
 		std::cout << "Impossible" << std::endl;
 	else if (this->_val < static_cast<double>(INT_MIN))
@@ -62,36 +64,12 @@ void Convert::printInt(void)
 
 void Convert::printFloat(void)
 {
-	std::cout << "float: ";
-	std::cout << std::fixed << std::setprecision(1) << static_cast<float>(_val) << 'f' << std::endl;
+	std::cout << "float  : ";
+	std::cout << std::setprecision(1) << std::fixed << static_cast<float>(_val) << 'f' << std::endl;
 }
 
 void Convert::printDouble(void)
 {
-	std::cout << "double: ";
-	std::cout << std::fixed << std::setprecision(1) << static_cast<double>(_val) << std::endl;
+	std::cout << "double : ";
+	std::cout << std::setprecision(1) << std::fixed << static_cast<double>(_val) << std::endl;
 }
-
-// char	*endptr;
-// double	val;
-
-// BEFORE
-// std::cout << literal << std::endl;
-
-// CHECK CHAR
-// if (std::isdigit(literal[0]))
-// 	std::cout << "is not numerical" << std::endl;
-// val = std::strtod(literal.c_str(), &endptr);
-
-// AFTER
-// std::cout << val << std::endl;
-// std::cout << endptr << std::endl;
-// std::cout << std::strerror(errno) << std::endl;
-// literal.argv = av[1];
-// // Check type :
-// // Char
-// // Int
-// // Float
-// // Double
-// if (!literal.argv.find('f'))
-// 	std::cout << "it's a float" << std::endl;
