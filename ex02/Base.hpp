@@ -1,19 +1,12 @@
 #ifndef BASE_HPP
 # define BASE_HPP
-
-#include "A.hpp"
-#include "B.hpp"
-#include "C.hpp"
+#include <cstdlib>
+#include <iostream>
 
 class Base
 {
 	public:
-	Base();
-	Base(const Base &other);
-	Base &operator=(const Base &other);
-	~Base();
-
-	private:
+	virtual ~Base();
 };
 
 #endif

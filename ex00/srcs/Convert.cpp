@@ -1,66 +1,21 @@
 #include "../includes/Convert.hpp"
 
-Convert::Convert() {}
+Convert::Convert() : _val(0), _precision(1) {}
 
-double Convert::stof(const char *s)
+Convert::Convert(std::string literal) : _precision(1)
 {
-  double a = 0.0;
-  int e = 0;
-  int c;
-  while ((c = *s++) != '\0' && isdigit(c)) {
-    a = a*10.0 + (c - '0');
-  }
-  if (c == '.') {
-    while ((c = *s++) != '\0' && isdigit(c)) {
-      a = a*10.0 + (c - '0');
-      e = e-1;
-    }
-  }
-  if (c == 'e' || c == 'E') {
-    int sign = 1;
-    int i = 0;
-    c = *s++;
-    if (c == '+')
-      c = *s++;
-    else if (c == '-') {
-      c = *s++;
-      sign = -1;
-    }
-    while (isdigit(c)) {
-      i = i*10 + (c - '0');
-      c = *s++;
-    }
-    e += i*sign;
-  }
-  while (e > 0) {
-    a *= 10.0;
-    e--;
-  }
-  while (e < 0) {
-    a *= 0.1;
-    e++;
-  }
-  return a;
-}
-
-Convert::Convert(std::string literal)
-{
-	//char	*endptr;
+	std::string endptr;
 
 	if (!std::isdigit(literal[0]) && !literal[1])
 		_val = static_cast<int>(literal[0]);
 	else
 	{
-		// Should use an other way to convert ...
-		// Use an atof and add endptr !
-		//_val = std::strtod(literal.c_str(), &endptr);
-		_val = stof(literal.c_str());
-		_val = nan(NULL);
-		// if (endptr[0] && (endptr[0] != 'f' || endptr[1]))
-		// {
-		// 	std::cout << "cannot convert : wrong argument" << std::endl;
-		// 	std::exit(1);
-		// }
+		_val = stringToDouble(literal, endptr);
+		if ((endptr[0] && (endptr[0] != 'f' || endptr[1])) || literal.length() > 300)
+		{
+			std::cout << "cannot convert : wrong argument" << std::endl;
+			std::exit(1);
+		}
 	}
 	printChar();
 	printInt();
@@ -76,23 +31,24 @@ Convert::Convert(const Convert &other)
 Convert &Convert::operator=(const Convert &other)
 {
 	this->_val = other._val;
+	this->_precision = other._precision;
 	return (*this);
 }
 
 Convert::~Convert() {}
 
-void Convert::printChar(void)
+void Convert::printChar(void) const
 {
 	std::cout << "char   : ";
 	if (isnan(this->_val))
 		std::cout << "Impossible" << std::endl;
 	else if (_val >= 32 && _val <= 127)
-		std::cout << static_cast<char>(_val) << std::endl;
+		std::cout << "'" << static_cast<char>(_val) << "'" << std::endl;
 	else
 		std::cout << "Non displayable" << std::endl;
 }
 
-void Convert::printInt(void)
+void Convert::printInt(void) const
 {
 	std::cout << "int    : ";
 	if (isnan(this->_val))
@@ -105,14 +61,76 @@ void Convert::printInt(void)
 		std::cout << static_cast<int>(_val) << std::endl;
 }
 
-void Convert::printFloat(void)
+void Convert::printFloat(void) const
 {
 	std::cout << "float  : ";
-	std::cout << std::setprecision(1) << std::fixed << static_cast<float>(_val) << 'f' << std::endl;
+	std::cout << std::setprecision(_precision) << std::fixed << static_cast<float>(_val) << 'f' << std::endl;
 }
 
-void Convert::printDouble(void)
+void Convert::printDouble(void) const
 {
 	std::cout << "double : ";
-	std::cout << std::setprecision(1) << std::fixed << static_cast<double>(_val) << std::endl;
+	std::cout << std::setprecision(_precision) << std::fixed << static_cast<double>(_val) << std::endl;
+}
+
+double Convert::stringToDouble(const std::string & literal, std::string & endptr)
+{
+	int		i = 0;
+	int		e = 0;
+	int		c = 0;
+	int		sign = 1;
+	double	val = 0.0;
+
+	// Handle sign
+	if (literal[i] == '+')
+		i++;
+	else if (literal[i] == '-')
+	{
+		i++;
+		sign = -1;
+	}
+	// Handle inf
+	if (literal.substr(i, 3) == "inf")
+	{
+		i += 3;
+		val = std::numeric_limits<double>::infinity();
+	}
+	// Handle nan
+	else if (literal.substr(i, 3) == "nan")
+	{
+		i += 3;
+		val = std::numeric_limits<double>::quiet_NaN();
+	}
+	// Convert string into a double
+	else
+	{
+		while ((c = literal[i++]) && isdigit(c))
+		{
+			val = val * 10.0 + (c - '0');
+		}
+		if (c == '.')
+		{
+			_precision = 0;
+			while ((c = literal[i++]) && isdigit(c))
+			{
+				val = val * 10.0 + (c - '0');
+				e--;
+				_precision++;
+			}
+		}
+		while (e > 0)
+		{
+			val *= 10.0;
+			e--;
+		}
+		while (e < 0)
+		{
+			val *= 0.1;
+			e++;
+		}
+		i--;
+	}
+	// Set endptr and return converted value
+	endptr = literal.substr(i);
+	return (val * sign);
 }
