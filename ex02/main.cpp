@@ -54,7 +54,7 @@ void identify(Base & p)
 
 int main(void)
 {
-	srand((unsigned int)time(NULL));
+	srand(time(NULL));
 	Base * r1 = generate();
 	Base * r2 = generate();
 	Base * r3 = generate();
